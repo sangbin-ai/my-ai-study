@@ -2,7 +2,7 @@ ages = [15, 22, 35, 18, 40, 29, 13]#20세 이상 성인만 리스트 추출
 adult_ages = [age for age in ages if age >= 20]
 print(adult_ages)
 
-scores = [45, 67, 89, 32, 76, 90, 54]#60점 이상인 학생만 리스트 추출
+scores = [45, 67, 89, 32, 76, 90, 60]#60점 이상인 학생만 리스트 추출
 successful_student= [score for score in scores if score >=60]
 print(successful_student)
 
