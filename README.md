@@ -5,6 +5,9 @@
 
 ---
 
+📌 Velog: https://velog.io/@sangbin-ai
+
+---
 ## ✅ Week 1 (25.09.29) 
 - Python 기본 문법 학습  
   (변수, 데이터 타입, 문자열, 조건문, 반복문)
