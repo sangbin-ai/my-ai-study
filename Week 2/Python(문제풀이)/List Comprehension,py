@@ -2,7 +2,7 @@ a = [i for i in range(1, 11)] #range(n)은 0부터 n-1까지
 print(a)                      #range(x, y)는 x부터 y-1까지라고 기억
 
 b = [i for i in range(1, 11)] #표현식 for 변수 in 반복가능객체
-print(b[1:10:2]) # << range 큰 값일 경우 비효율 적
+print(b[1:10:2]) # << range 큰 값일 경우 비효율적
 
 words = ["apple", "banana", "charry"]
 c = [len(w) for w in words] #len=길이
