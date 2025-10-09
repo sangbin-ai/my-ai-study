@@ -2,7 +2,7 @@ name: Coin Alert (Hello Runner)
 
 on:
   schedule:
-    - cron: "*/5 * * * *"   # 5분마다 (UTC)
+    - cron: "5 12 * * *"   # 5분마다 (UTC)
   workflow_dispatch:
 
 jobs:
