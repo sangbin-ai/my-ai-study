@@ -24,12 +24,11 @@ jobs:
         working-directory: coin-alert
         env:
           SYMBOL: "BTC-USD"
-          INTERVAL: "1h"        # 일봉이면 "1d"
+          INTERVAL: "1d"        # 일봉이면 "1d"
           SHORT_WINDOW: "20"
-          LONG_WINDOW: "50"     # 지금은 50 유지
+          LONG_WINDOW: "60"     # 지금은 50 유지
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          TELEGRAM_TEST: "1"    # 임시 테스트: 1이면 한 번 메시지 전송
         run: |
           python ma_signal.py
 
