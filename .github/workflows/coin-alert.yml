@@ -1,0 +1,30 @@
+name: Coin Alert (Hello Runner)
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"   # 5분마다 (UTC)
+  workflow_dispatch:        # 수동 실행 버튼
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        working-directory: coin-alert
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Run script
+        working-directory: coin-alert
+        env:
+          SYMBOL: "BTC-USD"
+          INTERVAL: "1h"
+        run: |
+          python ma_signal.py
