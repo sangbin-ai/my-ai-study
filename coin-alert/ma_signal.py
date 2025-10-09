@@ -3,6 +3,7 @@ import pandas as pd
 import yfinance as yf
 from ta.trend import SMAIndicator
 from datetime import datetime, timezone
+import json
 
 SYMBOL   = os.getenv("SYMBOL", "BTC-USD")
 INTERVAL = os.getenv("INTERVAL", "1h")
