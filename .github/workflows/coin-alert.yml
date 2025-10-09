@@ -10,7 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -19,12 +18,18 @@ jobs:
         working-directory: coin-alert
         run: |
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install -r requirements.txt
 
       - name: Run script
         working-directory: coin-alert
         env:
           SYMBOL: "BTC-USD"
-          INTERVAL: "1h"
+          INTERVAL: "1h"        # 일봉이면 "1d"
+          SHORT_WINDOW: "20"
+          LONG_WINDOW: "50"     # 지금은 50 유지
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_TEST: "1"    # 임시 테스트: 1이면 한 번 메시지 전송
         run: |
           python ma_signal.py
+
