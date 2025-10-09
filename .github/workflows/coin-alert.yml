@@ -13,6 +13,14 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+          
+      - name: Restore state.json (dedupe)
+        uses: actions/cache/restore@v4
+        with:
+          path: coin-alert/state.json
+          key: coin-alert-state-
+          restore-keys: |
+            coin-alert-state-
 
       - name: Install deps
         working-directory: coin-alert
@@ -31,4 +39,10 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
           python ma_signal.py
-
+     #✅ (추가) state.json 저장
+      - name: Save state.json (dedupe)
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: coin-alert/state.json
+          key: coin-alert-state-${{ github.run_id }}
