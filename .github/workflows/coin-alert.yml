@@ -3,7 +3,7 @@ name: Coin Alert (Hello Runner)
 on:
   schedule:
     - cron: "*/5 * * * *"   # 5분마다 (UTC)
-  workflow_dispatch:        # 수동 실행 버튼
+  workflow_dispatch:
 
 jobs:
   run:
@@ -13,7 +13,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-          
+
       - name: Restore state.json (dedupe)
         uses: actions/cache/restore@v4
         with:
@@ -21,6 +21,10 @@ jobs:
           key: coin-alert-state-
           restore-keys: |
             coin-alert-state-
+
+      - name: Ensure state.json exists
+        run: |
+          test -f coin-alert/state.json || echo "{}" > coin-alert/state.json
 
       - name: Install deps
         working-directory: coin-alert
@@ -32,17 +36,22 @@ jobs:
         working-directory: coin-alert
         env:
           SYMBOL: "BTC-USD"
-          INTERVAL: "1d"        # 일봉이면 "1d"
+          INTERVAL: "1d"
           SHORT_WINDOW: "20"
-          LONG_WINDOW: "60"     # 지금은 50 유지
+          LONG_WINDOW: "60"
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
           python ma_signal.py
-     #✅ (추가) state.json 저장
+
+      - name: Touch state.json before cache
+        run: |
+          test -f coin-alert/state.json || echo "{}" > coin-alert/state.json
+
       - name: Save state.json (dedupe)
         if: always()
         uses: actions/cache/save@v4
         with:
           path: coin-alert/state.json
           key: coin-alert-state-${{ github.run_id }}
+
